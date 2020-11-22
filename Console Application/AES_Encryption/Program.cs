@@ -57,28 +57,25 @@ namespace AES_Encryption
 
                         // ComputeHash method takes a byte array as an input and returns a hash in the form of byte array of 128 bits.
                         // No matter how big the input data is, the hash will always be 128 bits. 
-                        myAes.Key = hash.ComputeHash(System.Text.Encoding.Default.GetBytes(key));
-                        myAes.IV = hash.ComputeHash(System.Text.Encoding.Default.GetBytes(iv));
+                        myAes.Key = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+                        myAes.IV = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
                     }
 
-                    Console.WriteLine($"Encryption key: {System.Text.Encoding.Default.GetString(myAes.Key)}");
-                    Console.WriteLine($"Encryption IV: {System.Text.Encoding.Default.GetString(myAes.IV)}");
+                    Console.WriteLine($"Encryption key: {Convert.ToBase64String(myAes.Key)}");
+                    Console.WriteLine($"Encryption IV: {Convert.ToBase64String(myAes.IV)}");
 
                     if (action == "e")
                     {
                         // Encrypt string    
                         byte[] encrypted = Encrypt(data, myAes.Key, myAes.IV);
                         // Print encrypted string    
-                        Console.WriteLine($"Encrypted data:{System.Text.Encoding.Default.GetString(encrypted)}");
+                        Console.WriteLine($"Encrypted data:{Convert.ToBase64String(encrypted)}");
 
-                        string decrypted = Decrypt(encrypted, myAes.Key, myAes.IV);
-                        // Print decrypted string  
-                        Console.WriteLine($"Decrypted data: {decrypted}");
                     }
                     else
                     { 
                         // Decrypt string
-                        string decrypted = Decrypt(System.Text.Encoding.Default.GetBytes(data), myAes.Key, myAes.IV);
+                        string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
                         // Print decrypted string  
                         Console.WriteLine($"Decrypted data: {decrypted}");
                     }
