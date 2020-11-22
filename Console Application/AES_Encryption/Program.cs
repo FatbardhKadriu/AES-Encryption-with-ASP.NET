@@ -7,7 +7,6 @@ namespace AES_Encryption
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             Console.WriteLine("Enter text that needs to be encrypted:");
@@ -16,6 +15,7 @@ namespace AES_Encryption
             string action = Console.ReadLine().ToLower();
             Console.WriteLine("Do you want to use your own Key and IV? (Y/N)");
             string response = Console.ReadLine().ToLower();
+
             if (response == "y")
             {
                 Console.WriteLine("Give your Key:");
@@ -41,35 +41,44 @@ namespace AES_Encryption
 
             try
             {
-                // Create Aes that generates a new key and initialization vector (IV).    
-                // Same key must be used in encryption and decryption    
-
+                // Create a new instance of the Aes class.
+                // This generates a new key and initialization vector (IV).    
+                // Same key must be used in encryption and decryption.   
                 using (Aes myAes = Aes.Create())
                 {
-
+                    // If key and initialization vector are given, they should be used to configure Aes key and IV.
                     if (kwargs != null)
                     {
                         string key = kwargs["Key"];
                         string iv = kwargs["IV"];
+
+                        // Create e new insctance of HashAlgorithm class which implemets MD5 hash algorithm.
                         HashAlgorithm hash = MD5.Create();
-                        myAes.Key = hash.ComputeHash(System.Text.Encoding.Unicode.GetBytes(key));
-                        myAes.IV = hash.ComputeHash(System.Text.Encoding.Unicode.GetBytes(iv));
+
+                        // ComputeHash method takes a byte array as an input and returns a hash in the form of byte array of 128 bits.
+                        // No matter how big the input data is, the hash will always be 128 bits. 
+                        myAes.Key = hash.ComputeHash(System.Text.Encoding.Default.GetBytes(key));
+                        myAes.IV = hash.ComputeHash(System.Text.Encoding.Default.GetBytes(iv));
                     }
 
-                    Console.WriteLine($"Encryption key: {System.Text.Encoding.UTF8.GetString(myAes.Key)}");
-                    Console.WriteLine($"Encryption IV: {System.Text.Encoding.UTF8.GetString(myAes.IV)}");
+                    Console.WriteLine($"Encryption key: {System.Text.Encoding.Default.GetString(myAes.Key)}");
+                    Console.WriteLine($"Encryption IV: {System.Text.Encoding.Default.GetString(myAes.IV)}");
 
                     if (action == "e")
                     {
                         // Encrypt string    
                         byte[] encrypted = Encrypt(data, myAes.Key, myAes.IV);
                         // Print encrypted string    
-                        Console.WriteLine($"Encrypted data:{System.Text.Encoding.UTF8.GetString(encrypted)}");
+                        Console.WriteLine($"Encrypted data:{System.Text.Encoding.Default.GetString(encrypted)}");
+
+                        string decrypted = Decrypt(encrypted, myAes.Key, myAes.IV);
+                        // Print decrypted string  
+                        Console.WriteLine($"Decrypted data: {decrypted}");
                     }
                     else
-                    {
-                        // Decrypt the bytes to a string.    
-                        string decrypted = Decrypt(System.Text.Encoding.ASCII.GetBytes(data), myAes.Key, myAes.IV);
+                    { 
+                        // Decrypt string
+                        string decrypted = Decrypt(System.Text.Encoding.Default.GetBytes(data), myAes.Key, myAes.IV);
                         // Print decrypted string  
                         Console.WriteLine($"Decrypted data: {decrypted}");
                     }
@@ -105,8 +114,11 @@ namespace AES_Encryption
                 // Create the streams used for encryption.
                 using (MemoryStream msEncrypt = new MemoryStream())
                 {
+                    // Use a stream that links data streams to cryptographic transformations.
+                    // Create a CryptoStream, pass it the msEncrypt, and encrypt it with the Aes class encryptor. 
                     using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                     {
+                        // Create a StreamWriter for easy writing to the stream.
                         using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                         {
                             //Write all data to the stream.
@@ -148,8 +160,11 @@ namespace AES_Encryption
                 // Create the streams used for decryption.
                 using (MemoryStream msDecrypt = new MemoryStream(cipherText))
                 {
+                    // Use a stream that links data streams to cryptographic transformations.
+                    // Create a CryptoStream, pass it the msDecrypt, and dencrypt it with the Aes class decryptor. 
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
+                        // Create a StreamRader for easy writing to the stream.
                         using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                         {
                             // Read the decrypted bytes from the decrypting stream
