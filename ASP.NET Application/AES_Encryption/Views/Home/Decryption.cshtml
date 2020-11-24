@@ -1,0 +1,81 @@
+﻿@model AES_Encryption.Models.AESModel
+
+@{
+    ViewBag.Title = "Decryption";
+}
+<h2>@ViewBag.Title.</h2>
+<form action="Decryption" method="post">
+    <table border="0">
+        <tr>
+            <td>
+                <label for="ciphertext">Ciphertext: </label><br />
+
+            </td>
+            <td>
+                <label for="plaintext">Plaintext: </label>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input name="ciphertext" id="ciphertext" /><br />
+            </td>
+            <td>
+                @if (Model != null)
+                {
+                    <h5 id="ciphertext">
+                        @Model.plaintext
+                    </h5>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="key">Key: </label><br />
+
+            </td>
+            <td>
+                <label>Key: </label>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input name="key" id="key" /><br />
+            </td>
+            <td>
+                @if (Model != null)
+                {
+                    <h5 id="ciphertext">
+                        @Model.key
+                    </h5>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="iv">IV: </label><br />
+
+            </td>
+            <td>
+                <label>IV: </label>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input name="iv" id="iv" /><br />
+            </td>
+            <td>
+                @if (Model != null)
+                {
+                    <h5 id="ciphertext">
+                        @Model.iv
+                    </h5>
+                }
+            </td>
+        </tr>
+    </table>
+    <input class="btnEncrypt" type="submit" />
+</form>
+
