@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td>
-                <input name="plaintext" id="plaintext" /><br />
+                <input type="text" required name="plaintext" id="plaintext" /><br />
             </td>
             <td>
                 @if (Model != null)
@@ -42,7 +42,7 @@
         </tr>
         <tr>
             <td>
-                <input name="key" id="key" /><br />
+                <input required type="password" name="key" id="key" /><br />
             </td>
             <td>
                 @if (Model != null)
@@ -65,7 +65,7 @@
         </tr>
         <tr>
             <td>
-                <input name="iv" id="iv" /><br />
+                <input required type="password" name="iv" id="iv" /><br />
             </td>
             <td>
                 @if (Model != null)
