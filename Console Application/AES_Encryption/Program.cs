@@ -9,7 +9,7 @@ namespace AES_Encryption
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter text that needs to be encrypted:");
+            Console.WriteLine("Enter text that needs to be encrypted or decrypted:");
             string data = Console.ReadLine();
             Console.WriteLine("Do you want to encrypt or decrypt? (E/D)");
             string action = Console.ReadLine().ToLower();
@@ -19,9 +19,9 @@ namespace AES_Encryption
             if (response == "y")
             {
                 Console.WriteLine("Give your Key:");
-                string key = Console.ReadLine().ToLower();
+                string key = Console.ReadLine();
                 Console.WriteLine("Give your IV:");
-                string iv = Console.ReadLine().ToLower();
+                string iv = Console.ReadLine();
                 Dictionary<String, String> parameters = new Dictionary<String, String> { { "Key", key }, { "IV", iv } };
                 EncryptAesManaged(data, action, parameters);
             }
@@ -52,13 +52,22 @@ namespace AES_Encryption
                         string key = kwargs["Key"];
                         string iv = kwargs["IV"];
 
-                        // Create e new insctance of HashAlgorithm class which implemets MD5 hash algorithm.
-                        HashAlgorithm hash = MD5.Create();
+                        if (key.Length != 44 && iv.Length != 24)
+                        {
+                            // Create e new insctance of HashAlgorithm class which implemets MD5 hash algorithm.
+                            HashAlgorithm hash = MD5.Create();
 
-                        // ComputeHash method takes a byte array as an input and returns a hash in the form of byte array of 128 bits.
-                        // No matter how big the input data is, the hash will always be 128 bits. 
-                        myAes.Key = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
-                        myAes.IV = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
+                            // ComputeHash method takes a byte array as an input and returns a hash in the form of byte array of 128 bits.
+                            // No matter how big the input data is, the hash will always be 128 bits. 
+                            myAes.Key = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+                            myAes.IV = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
+                        }
+                        else 
+                        {
+                            myAes.Key = Convert.FromBase64String(key);
+                            myAes.IV = Convert.FromBase64String(iv);
+
+                        }
                     }
 
                     Console.WriteLine($"Encryption key: {Convert.ToBase64String(myAes.Key)}");
