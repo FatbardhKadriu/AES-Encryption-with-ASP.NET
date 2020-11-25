@@ -4,79 +4,65 @@
     ViewBag.Title = "Encryption";
 }
 
-<h2>@ViewBag.Title.</h2>
-<form action="Encryption" method="post">
-    <table border="0">
-        <tr>
-            <td>
-                <label for="plaintext">Plaintext: </label><br />
-
-            </td>
-            <td>
-                <label for="ciphertext">Ciphertext: </label>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" required name="plaintext" id="plaintext" /><br />
-            </td>
-            <td>
+<h2 class="text-center">@ViewBag.Title.</h2><br/>
+<div class="container-fluid">
+    <form action="Encryption" method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="plaintext">Plaintext</label>
+                    <textarea class="form-control" id="plaintext" name="plaintext" required rows="3"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <label for="ciphertext">Ciphertext</label>
                 @if (Model != null)
                 {
                     <h5 id="ciphertext">
                         @Model.ciphertext
                     </h5>
                 }
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="key">Key: </label><br />
+            </div>
+        </div>
 
-            </td>
-            <td>
-                <label>Key: </label>
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="password" name="key" id="key" /><br />
-            </td>
-            <td>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="key">Key</label>
+                    <input type="password" name="key" class="form-control" id="key" aria-describedby="keyHelp">
+                    <small id="keyHelp" class="form-text text-muted">Entering your key is safer</small>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <label>Key</label>
                 @if (Model != null)
                 {
                     <h5 id="ciphertext">
                         @Model.key
                     </h5>
                 }
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="iv">IV: </label><br />
 
-            </td>
-            <td>
-                <label>IV: </label>
+            </div>
+        </div>
 
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="password" name="iv" id="iv" /><br />
-            </td>
-            <td>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="iv">IV</label>
+                    <input type="password" class="form-control" name="iv" id="iv" aria-describedby="ivHelp">
+                    <small id="ivHelp" class="form-text text-muted">Entering your IV is safer</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col-sm-8">
+                <label>IV</label>
                 @if (Model != null)
                 {
                     <h5 id="ciphertext">
                         @Model.iv
                     </h5>
                 }
-            </td>
-        </tr>
-    </table>
-    <input class="btnEncrypt" type="submit" />
-</form>
-
+            </div>
+        </div>
+    </form>
+</div>

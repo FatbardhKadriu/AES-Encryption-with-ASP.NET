@@ -22,7 +22,6 @@ namespace AES_Encryption.Controllers
             return View();
         }
 
-
         [HttpPost]
         public ActionResult Encryption(String plaintext, String key, String iv)
         {
@@ -39,7 +38,6 @@ namespace AES_Encryption.Controllers
             {
                 results = EncryptAesManaged(plaintext, "e");
             }
-            // ViewBag.Message = "Your application encrypt page.";
             AESModel encryptModel = new AESModel();
             encryptModel.plaintext = plaintext;
             encryptModel.ciphertext = results[2];
@@ -56,7 +54,6 @@ namespace AES_Encryption.Controllers
         [HttpPost]
         public ActionResult Decryption(String ciphertext, String key, String iv)
         {
-            // ViewBag.Message = "Your application encrypt page.";
             Dictionary<String, String> parameters = new Dictionary<String, String> { { "Key", key }, { "IV", iv } };
             List<String> results = EncryptAesManaged(ciphertext, "d", parameters);
             AESModel encryptModel = new AESModel();
@@ -125,7 +122,6 @@ namespace AES_Encryption.Controllers
 
         byte[] Encrypt(string plainText, byte[] Key, byte[] IV)
         {
-
             byte[] encrypted;
 
             using (Aes aesAlg = Aes.Create())
