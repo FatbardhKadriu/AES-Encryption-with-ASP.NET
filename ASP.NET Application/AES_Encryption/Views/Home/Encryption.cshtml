@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Encryption";
 }
-
+<style>
+    #keyChecked, #ivChecked{
+        display:none;
+    }
+   
+</style>
 <h2 class="text-center">@ViewBag.Title.</h2><br/>
 <div class="container-fluid">
     <form action="Encryption" method="post">
@@ -27,11 +32,30 @@
 
         <div class="row">
             <div class="col-sm-4">
-                <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkKey" onclick="checkFunction('checkKey', 'keyChecked')">
+                    <label class="form-check-label" for="checkKey">
+                        Add key
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4" >
+                <div class="form-group" id="keyChecked">
                     <label for="key">Key</label>
                     <input type="password" name="key" class="form-control" id="key" aria-describedby="keyHelp">
                     <small id="keyHelp" class="form-text text-muted">Entering your key is safer</small>
+                    <div class="form-check">
+                        <br />
+                        <input class="form-check-input" type="checkbox" value="" id="checkIV" onclick="checkFunction('checkIV', 'ivChecked')">
+                        <label class="form-check-label" for="checkIV">
+                            Add IV
+                        </label>
+                    </div>
                 </div>
+
             </div>
             <div class="col-sm-8">
                 <label>Key</label>
@@ -47,12 +71,12 @@
 
         <div class="row">
             <div class="col-sm-4">
-                <div class="form-group">
+                <div class="form-group" id="ivChecked">
                     <label for="iv">IV</label>
                     <input type="password" class="form-control" name="iv" id="iv" aria-describedby="ivHelp">
                     <small id="ivHelp" class="form-text text-muted">Entering your IV is safer</small>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Encrypt</button>
             </div>
             <div class="col-sm-8">
                 <label>IV</label>
@@ -66,3 +90,19 @@
         </div>
     </form>
 </div>
+
+<script>
+    function checkFunction(checkID, hideDivID) {
+        var checkBox = document.getElementById(checkID);
+        var group = document.getElementById(hideDivID)
+        if (checkBox.checked == true) {
+            group.style.display = "block";
+        } else {
+            group.style.display = "none";
+            document.getElementById("checkIV").checked = false;
+            document.getElementById("ivChecked").style.display = "none";
+        }
+    }
+
+
+</script>
