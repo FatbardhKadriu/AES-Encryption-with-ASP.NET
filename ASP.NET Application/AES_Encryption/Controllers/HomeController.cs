@@ -54,6 +54,8 @@ namespace AES_Encryption.Controllers
         public ActionResult Decryption(String ciphertext, String key, String iv)
         {            
             AESModel encryptModel = new AESModel();
+            encryptModel.ciphertext = ciphertext;
+            encryptModel.key = key;
             if (ciphertext == "")
             {
                 encryptModel.cipherError = "Ciphertext field should not be empty!";
@@ -64,7 +66,7 @@ namespace AES_Encryption.Controllers
             }
             else if (iv == "")
             {
-                encryptModel.ivError = "IV field should not be empty!";
+                encryptModel.ivError = "IV field should not be empty!";            
             }
             else 
             {
@@ -72,7 +74,6 @@ namespace AES_Encryption.Controllers
                 {
                     List<String> results = EncryptAesManaged(ciphertext, "d", key, iv);
                     encryptModel.plaintext = results[2];
-                    encryptModel.ciphertext = ciphertext;
                     encryptModel.key = results[0];
                     encryptModel.iv = results[1];
                     encryptModel.cipherError = "";
@@ -82,7 +83,8 @@ namespace AES_Encryption.Controllers
                 }
                 catch (Exception)
                 {
-                    encryptModel.error = "This ciphertext cannot be decrypted with given key and IV!";
+                    encryptModel.error = "Invalid Key or IV!";
+                    encryptModel.key = "";
                 }
                 
             }

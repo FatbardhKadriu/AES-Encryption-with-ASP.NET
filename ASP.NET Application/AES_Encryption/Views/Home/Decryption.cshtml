@@ -11,7 +11,11 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="ciphertext">Ciphertext</label>
-                    <textarea class="form-control" id="ciphertext" name="ciphertext" aria-describedby="cipherError" rows="3"></textarea>
+                    <textarea class="form-control" id="ciphertext" name="ciphertext" aria-describedby="cipherError" rows="3">
+@if (Model != null && @Model.ciphertext != "" && @Model.plaintext == null)
+{
+    @Model.ciphertext
+}</textarea>
                     <small id="cipherError" style="color:darkred">
                         @if (Model != null)
                         {
@@ -35,7 +39,9 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="key">Key</label>
-                    <input type="password" name="key" class="form-control" id="key" aria-describedby="keyError">
+                    <input type="password" name="key" class="form-control" id="key"  aria-describedby="keyError"
+                           value="@if (Model != null && Model.key != "" && Model.plaintext == null) {
+                                @Model.key}"/>
                     <small id="keyError" style="color:darkred">
                         @if (Model != null && (@Model.keyError != null || @Model.keyError != ""))
                         {
@@ -60,7 +66,7 @@
                     </small>
                 </div>
                 <button type="submit" class="btn btn-primary" aria-describedby="error">Decrypt</button>
-                </br>
+                <br/>
                 <small id="error" style="color:darkred">
                     @if (Model != null && (@Model.error != null || @Model.error != ""))
                     {
