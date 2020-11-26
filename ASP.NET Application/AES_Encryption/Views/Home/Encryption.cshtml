@@ -16,7 +16,13 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="plaintext">Plaintext</label>
-                    <textarea class="form-control" id="plaintext" name="plaintext" required rows="3"></textarea>
+                    <textarea class="form-control" id="plaintext" name="plaintext" rows="3" aria-describedby="plainError"></textarea>             
+                    <small id="plainError" style="color:darkred">
+                        @if (Model != null)
+                        {
+                            @Model.plainError
+                        }
+                    </small>
                 </div>
             </div>
             <div class="col-sm-8">

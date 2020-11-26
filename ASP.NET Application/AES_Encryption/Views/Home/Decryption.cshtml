@@ -11,11 +11,17 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="ciphertext">Ciphertext</label>
-                    <textarea class="form-control" id="ciphertext" name="ciphertext" required rows="3"></textarea>
+                    <textarea class="form-control" id="ciphertext" name="ciphertext" aria-describedby="cipherError" rows="3"></textarea>
+                    <small id="cipherError" style="color:darkred">
+                        @if (Model != null)
+                        {
+                            @Model.cipherError
+                        }
+                    </small>
                 </div>
             </div>
             <div class="col-sm-8">
-                @if (Model != null)
+                @if (Model != null && @Model.plaintext != null)
                 {
                     <label for="plaintext">Plaintext</label>
                     <h5 id="plaintext">
@@ -29,8 +35,13 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="key">Key</label>
-                    <input type="password" name="key" class="form-control" id="key" aria-describedby="keyHelp">
-                    <small id="keyHelp" class="form-text text-muted">Entering your key is safer</small>
+                    <input type="password" name="key" class="form-control" id="key" aria-describedby="keyError">
+                    <small id="keyError" style="color:darkred">
+                        @if (Model != null && (@Model.keyError != null || @Model.keyError != ""))
+                        {
+                            @Model.keyError
+                        }
+                    </small>
                 </div>
             </div>
             <div class="col-sm-8"></div>
@@ -40,11 +51,22 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="iv">IV</label>
-                    <input type="password" class="form-control" name="iv" id="iv" aria-describedby="ivHelp">
-                    <small id="ivHelp" class="form-text text-muted">Entering your IV is safer</small>
+                    <input type="password" class="form-control" name="iv" id="iv" aria-describedby="ivError">
+                    <small id="ivError" style="color:darkred">
+                        @if (Model != null && (@Model.ivError != null || @Model.ivError != ""))
+                        {
+                            @Model.ivError
+                        }
+                    </small>
                 </div>
-                <button type="submit" class="btn btn-primary">Decrypt</button>
-
+                <button type="submit" class="btn btn-primary" aria-describedby="error">Decrypt</button>
+                </br>
+                <small id="error" style="color:darkred">
+                    @if (Model != null && (@Model.error != null || @Model.error != ""))
+                    {
+                        @Model.error
+                    }
+                </small>
             </div>
             <div class="col-sm-8"></div>
         </div>

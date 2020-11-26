@@ -25,14 +25,23 @@ namespace AES_Encryption.Controllers
         [HttpPost]
         public ActionResult Encryption(String plaintext, String key, String iv)
         {
-            List<String> results = new List<string>();
-            results = EncryptAesManaged(plaintext, "e", key, iv);
-
             AESModel encryptModel = new AESModel();
-            encryptModel.plaintext = plaintext;
-            encryptModel.ciphertext = results[2];
-            encryptModel.key = results[0];
-            encryptModel.iv = results[1];
+            if (plaintext != "")
+            {
+                List<String> results = new List<string>();
+                results = EncryptAesManaged(plaintext, "e", key, iv);
+
+                encryptModel.plaintext = plaintext;
+                encryptModel.ciphertext = results[2];
+                encryptModel.key = results[0];
+                encryptModel.iv = results[1];
+                encryptModel.plainError = "";
+            }
+            else
+            { 
+                encryptModel.plainError = "Plaintext field should not be empty!"; 
+            }
+
             return View(encryptModel);
         }
 
@@ -43,14 +52,40 @@ namespace AES_Encryption.Controllers
 
         [HttpPost]
         public ActionResult Decryption(String ciphertext, String key, String iv)
-        {
-            List<String> results = EncryptAesManaged(ciphertext, "d", key, iv);
-            
+        {            
             AESModel encryptModel = new AESModel();
-            encryptModel.plaintext = results[2];
-            encryptModel.ciphertext = ciphertext;
-            encryptModel.key = results[0];
-            encryptModel.iv = results[1];
+            if (ciphertext == "")
+            {
+                encryptModel.cipherError = "Ciphertext field should not be empty!";
+            }
+            else if (key == "")
+            {
+                encryptModel.keyError = "Key field should not be empty!";
+            }
+            else if (iv == "")
+            {
+                encryptModel.ivError = "IV field should not be empty!";
+            }
+            else 
+            {
+                try
+                {
+                    List<String> results = EncryptAesManaged(ciphertext, "d", key, iv);
+                    encryptModel.plaintext = results[2];
+                    encryptModel.ciphertext = ciphertext;
+                    encryptModel.key = results[0];
+                    encryptModel.iv = results[1];
+                    encryptModel.cipherError = "";
+                    encryptModel.keyError = "";
+                    encryptModel.ivError = "";
+                    encryptModel.error = "";
+                }
+                catch (Exception)
+                {
+                    encryptModel.error = "This ciphertext cannot be decrypted with given key and IV!";
+                }
+                
+            }
             return View(encryptModel);
         }
 
