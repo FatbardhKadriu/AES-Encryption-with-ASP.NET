@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Decryption";
 }
-<h2 class="text-center">@ViewBag.Title.</h2><br/>
+<h2 class="text-center">@ViewBag.Title</h2><br/>
 
 <div class="container-fluid">
     <form action="Decryption" method="post">
@@ -15,9 +15,9 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                <label for="plaintext">Plaintext</label>
                 @if (Model != null)
                 {
+                    <label for="plaintext">Plaintext</label>
                     <h5 id="plaintext">
                         @Model.plaintext
                     </h5>
@@ -33,16 +33,7 @@
                     <small id="keyHelp" class="form-text text-muted">Entering your key is safer</small>
                 </div>
             </div>
-            <div class="col-sm-8">
-                <label>Key</label>
-                @if (Model != null)
-                {
-                    <h5 id="ciphertext">
-                        @Model.key
-                    </h5>
-                }
-
-            </div>
+            <div class="col-sm-8"></div>
         </div>
 
         <div class="row">
@@ -55,15 +46,7 @@
                 <button type="submit" class="btn btn-primary">Decrypt</button>
 
             </div>
-            <div class="col-sm-8">
-                <label>IV</label>
-                @if (Model != null)
-                {
-                    <h5 id="ciphertext">
-                        @Model.iv
-                    </h5>
-                }
-            </div>
+            <div class="col-sm-8"></div>
         </div>
     </form>
 </div>

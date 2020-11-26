@@ -9,7 +9,7 @@
     }
    
 </style>
-<h2 class="text-center">@ViewBag.Title.</h2><br/>
+<h2 class="text-center">@ViewBag.Title</h2><br/>
 <div class="container-fluid">
     <form action="Encryption" method="post">
         <div class="row">
@@ -20,9 +20,9 @@
                 </div>
             </div>
             <div class="col-sm-8">
-                <label for="ciphertext">Ciphertext</label>
                 @if (Model != null)
                 {
+                    <label for="ciphertext">Ciphertext</label>
                     <h5 id="ciphertext">
                         @Model.ciphertext
                     </h5>
@@ -58,9 +58,9 @@
 
             </div>
             <div class="col-sm-8">
-                <label>Key</label>
                 @if (Model != null)
                 {
+                    <label>Key</label>
                     <h5 id="ciphertext">
                         @Model.key
                     </h5>
@@ -79,9 +79,9 @@
                 <button type="submit" class="btn btn-primary">Encrypt</button>
             </div>
             <div class="col-sm-8">
-                <label>IV</label>
                 @if (Model != null)
                 {
+                    <label>IV</label>
                     <h5 id="ciphertext">
                         @Model.iv
                     </h5>
@@ -103,6 +103,4 @@
             document.getElementById("ivChecked").style.display = "none";
         }
     }
-
-
 </script>
