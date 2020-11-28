@@ -1,4 +1,4 @@
-# AES-Encryption
+# AES Encryption
 
 This project was made for assignment 1 in the course "Information Security" - Development of AES text encryption program in ASP.NET.
 
