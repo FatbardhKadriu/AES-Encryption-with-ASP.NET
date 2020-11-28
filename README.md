@@ -1,51 +1,56 @@
 # AES-Encryption
 
-Detyra e parë në lëndën "Siguria e informacionit" - Zhvillimi i programit për enkriptimin e tekstit me AES në ASP.NET.
+This project was made for assignment 1 in the course "Information Security" - Development of AES text encryption program in ASP.NET.
 
-![Demo](READMEresources/Index.gif#style=centerme)
+![Application View](READMEresources/Index.gif)
 
-## Funksionaliteti
+## Functionality
 
-Në këtë aplikacion është implementuar algoritmi i enkriptimit AES (Advanced Encryption Standard). Dy funksionet kryesore që janë zhvilluar janë enkriptimi dhe dekriptimi i tekstit.
+In this application is implemented AES (Advanced Encryption Standard) encryption algorithm. The two main functions that have been developed are text encryption and decryption.
 
-Enkriptimi ka tre mundësi:
+Encryption has three possibilities:
 
-- Jepet vetëm plaintext për tu enkriptuar - Në këtë rast gjenerohet një çelës për ekriptimi dhe një vektor inicializues i çfarëdoshëm të cilët përdoren në funksionin e enkriptimit. Çelësi dhe IV e përdorur i tregohen përdoruesit.
+- Only plaintext is given to be encrypted - In this case an encryption key and an initialization vector are generated which are used in the encryption function. The used key and IV are shown to the user.
 
-- Jepet plaintext dhe çelësi për enkriptim - Nëse çelësi ka gjatësi adekuate për algoritmin AES përdoret si i tillë, në të kundërtën gjenerohet hash i tij që për çfarëdo lloj hyrje çelësi i cili përdoret në algoritëm të ketë gjatësi fikse të pranueshme për AES. Gjenerohet një vektor i çfarëdoshëm inicializues dhe i bashkangjitet funksionit të enkriptimit. IV e përdorur i tregohet përdoruesit.
+- Plaintext and encryption key are given - If the key has adequate length for the AES algorithm is used as such, otherwise its hash is generated so that for any type of input the key used in the algorithm has a fixed length acceptable for AES. An initialization vector is generated and attached to the encryption function. The IV used is shown to the user.
 
-- Jepet plaintext, çelësi dhe vektori inicializues - Nëse çelësi dhe IV kanë gjatësi adekuate për algoritmin AES përdoren siç janë dhënë nga përdoruesi, në të kundërtën gjenerohet hash i çelësit dhe hash i IV-së në mënyrë që për çfarëdo lloj hyrje të çelësit dhe IV të përdoren gjatësitë e pranueshme të tyre për AES.
+- Plaintext, key and initialization vector are given - If key and IV have adequate length for AES algorithm, they are used as provided by the user, otherwise key hash and IV hash are generated so that for any key and IV input are used their acceptable lengths for AES.
 
-| ![Demo](READMEresources/Encryption_1.gif#style=centerme) | ![Demo](READMEresources/Encryption_2.gif#style=centerme) |
-| -------------------------------------------------------- | -------------------------------------------------------- |
+It is also worth noting to mention that after successful encryption you can export used key and IV as text file.
 
-![Demo](READMEresources/Encryption_3.gif#style=centerme)
+![First encryption case](READMEresources/Encryption_1.gif)
 
-Dekriptimi mund të ketë tre raste:
+![Second encryption case](READMEresources/Encryption_2.gif)
 
-- Jepet ciphertext, çelësi dhe vektori inicializues
+![Third encryption case](READMEresources/Encryption_3.gif)
 
-  - Nëse çelësi dhe vektori inicializues janë të njejtë me ata që janë përdorur për enkriptimin e tekstit përkatës, realizohet dekriptimi me sukses.
-  - Nëse çelësi ose vektori inicializues, apo të dy bashkë nuk janë të njejtë me ata që janë përdorur për enkriptimin e tekstit përkatës nuk mund të realizohet dekriptimi.
+Decryption can have three cases:
 
-- Jepet ciphertext dhe çelësi - Në mungesë të vektorit incializues nuk mund të realizohet dekriptimi.
+- Ciphertext, key and initialization vector are given
 
-- Jepet vetëm ciphertext - Në mungesë të çelësit dhe vektorit inicializues nuk mund të realizohet dekriptimi.
+  - If the key and the initialization vector are the same as those used to encrypt the corresponding text, the decryption is performed successfully.
+  - If the key or the initialization vector, or both are not the same as those used to encrypt the corresponding text, decryption cannot be performed.
 
-| ![Demo](READMEresources/Decryption_1.gif#style=centerme) | ![Demo](READMEresources/Decryption_2.gif#style=centerme) |
-| -------------------------------------------------------- | -------------------------------------------------------- |
+- Ciphertext and key are given - In the absence of the initialization vector decryption can not be performed.
 
-![Demo](READMEresources/Decryption_3.gif#style=centerme)
+- Only ciphertext is given - In the absence of the key and the initialization vector decryption can not be performed.
 
-<style>
-  img[src$="centerme"] {
-  display:block;
-  margin: 0 auto;
-  border-radius: 10px;
-  }
-  h1{
-    background-image: url(https://assets.kpmg/content/dam/kpmg/xx/images/2019/10/glass-texture-against-blue-background.jpg/jcr:content/renditions/cq5dam.web.1082.378.jpg);
-    background-size: cover;
-    border-radius: 5px;
-  }
-</style>
+![First decryption case/1](READMEresources/Decryption_1.gif)
+
+![First decryption case/2](READMEresources/Decryption_2.gif)
+
+![Second/third decryption cases](READMEresources/Decryption_3.gif)
+
+## Used technology
+
+- ASP.NET and Web Development
+
+- .NET Desktop Framework
+
+## Members
+
+[Fatbardh Kadriu](https://github.com/FatbardhKadriu)
+
+[Arbena Musa](https://github.com/ArbenaMusa)
+
+[Albana Hysenaj](https://github.com/albanah)
