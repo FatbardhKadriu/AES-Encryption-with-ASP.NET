@@ -15,10 +15,12 @@
         padding: 20px;
         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
         transition: all 0.4s;
+        background-color: #563D7C;
+        color: white;
     }
 
     .nav-link {
-        color: #563D7C;
+        color: gray;
         font-weight: bold;
     }
 
@@ -31,31 +33,31 @@
         list-style-type: none;
     }
 
-    .timeline:before {
-        position: absolute;
-        left: 50%;
-        top: 0;
-        content: ' ';
-        display: block;
-        width: 6px;
-        height: 100%;
-        margin-left: -3px;
-        background: rgb(155, 30, 54);
-        background: linear-gradient(to bottom, #563D7C 0%, #563D7C 8%, #563D7C 92%, #563D7C 100%);
-        z-index: 5;
-    }
+        .timeline:before {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            content: ' ';
+            display: block;
+            width: 6px;
+            height: 100%;
+            margin-left: -3px;
+            background: rgb(155, 30, 54);
+            background: linear-gradient(to bottom, #563D7C 0%, #563D7C 8%, #563D7C 92%, #563D7C 100%);
+            z-index: 5;
+        }
 
-    .timeline li {
-        padding: 1em 0;
-    }
+        .timeline li {
+            padding: 1em 0;
+        }
 
-    .timeline li:after {
-        content: "";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-    }
+            .timeline li:after {
+                content: "";
+                display: block;
+                height: 0;
+                clear: both;
+                visibility: hidden;
+            }
 
     .direction-l {
         position: relative;
@@ -94,25 +96,25 @@
         box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.15);
     }
 
-    .direction-l .flag:before,
-    .direction-r .flag:before {
-        position: absolute;
-        top: 50%;
-        right: -40px;
-        content: ' ';
-        display: block;
-        width: 12px;
-        height: 12px;
-        margin-top: -10px;
-        background: #fff;
-        border-radius: 10px;
-        border: 4px solid #563D7C;
-        z-index: 10;
-    }
+        .direction-l .flag:before,
+        .direction-r .flag:before {
+            position: absolute;
+            top: 50%;
+            right: -40px;
+            content: ' ';
+            display: block;
+            width: 12px;
+            height: 12px;
+            margin-top: -10px;
+            background: #fff;
+            border-radius: 10px;
+            border: 4px solid #563D7C;
+            z-index: 10;
+        }
 
-    .direction-r .flag:before {
-        left: -40px;
-    }
+        .direction-r .flag:before {
+            left: -40px;
+        }
 
     .direction-l .flag:after {
         content: "";
@@ -177,27 +179,35 @@
     }
 
     .wall {
-        width:100%;
-        height:20vh;
+        width: 100%;
+        height: 20vh;
         border-radius: 5px;
     }
-    .jumbo{
+
+    .jumbo {
         background-image: url(https://assets.kpmg/content/dam/kpmg/xx/images/2019/10/glass-texture-against-blue-background.jpg/jcr:content/renditions/cq5dam.web.1082.378.jpg);
         background-size: cover;
         color: white;
     }
+
     .jumbo2 {
         background-color: #563D7C;
         color: white;
     }
+
+    .active{
+        background-color: white;
+    }
+        .active a {
+            color: steelblue;
+        }
 </style>
 
 <div class="row">
     <div class="col-md-2">
-        <div class="vertical-nav bg-white" id="sidebar">
-            <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Theory</p>
-
-            <ul class="nav flex-column bg-white mb-0">
+        <div class="vertical-nav bg-white">
+            <ul class="nav flex-column bg-white mb-0" id="navigation">
+                <p class="font-weight-bold text-uppercase px-3 small pb-4 mb-0">Theory</p>
                 <li class="nav-item">
                     <a href="#history" class="nav-link">
                         History
@@ -208,11 +218,7 @@
                         How it works
                     </a>
                 </li>
-            </ul>
-
-            <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Development</p>
-
-            <ul class="nav flex-column bg-white mb-0">
+                <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Development</p>
                 <li class="nav-item">
                     <a href="#classes" class="nav-link">
                         C# Classes
@@ -335,11 +341,11 @@
             </li>
         </ul>
         <p>
-            For ease of description, the block and cipher key are often represented as an array of columns where each 
-            array has 4 rows and each column represents a single byte (8 bits). The number of columns in an array representing 
-            the state or cipher key, then, can be calculated as the block or key length divided by 32 (32 bits = 4 bytes). 
-            An array representing a State will have Nb columns, where Nb values of 4, 6, and 8 correspond to a 128-, 192-, 
-            and 256-bit block, respectively. Similarly, an array representing a Cipher Key will have Nk columns, where Nk values 
+            For ease of description, the block and cipher key are often represented as an array of columns where each
+            array has 4 rows and each column represents a single byte (8 bits). The number of columns in an array representing
+            the state or cipher key, then, can be calculated as the block or key length divided by 32 (32 bits = 4 bytes).
+            An array representing a State will have Nb columns, where Nb values of 4, 6, and 8 correspond to a 128-, 192-,
+            and 256-bit block, respectively. Similarly, an array representing a Cipher Key will have Nk columns, where Nk values
             of 4, 6, and 8 correspond to a 128-, 192-, and 256-bit key, respectively.
         </p>
         <p>The AES/Rijndael cipher itself has three operational stages:</p>
@@ -392,7 +398,7 @@
 
         <h2 class="text-center" id="project">Our project</h2>
         <p>
-            AES (Advanced Encryption Standard) encryption algorithm is implemented in this application. The two main functions 
+            AES (Advanced Encryption Standard) encryption algorithm is implemented in this application. The two main functions
             that have been developed are text encryption and decryption.
         </p>
         <div class="jumbotron jumbo2">
@@ -435,7 +441,21 @@
                 <li>Only ciphertext is given - In the absence of the key and the initialization vector decryption can not be performed.</li>
             </ol>
         </div>
-        
+
     </div>
 </div>
 
+
+<script>
+    var navigation = document.getElementById("navigation");
+    var links = navigation.getElementsByClassName("nav-item");
+    for (var i = 0; i < links.length; i++) {
+        links[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            if (current.length > 0) {
+                current[0].className = current[0].className.replace(" active", "");
+            }
+            this.className += " active";
+        });
+    }
+</script>

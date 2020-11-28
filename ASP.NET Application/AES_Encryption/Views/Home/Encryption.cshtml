@@ -7,17 +7,27 @@
     #keyChecked, #ivChecked{
         display:none;
     }
+
+    .jumbo {
+        background-image: url(https://assets.kpmg/content/dam/kpmg/xx/images/2019/10/glass-texture-against-blue-background.jpg/jcr:content/renditions/cq5dam.web.1082.378.jpg);
+        background-size: cover;
+        color: white;
+        height:46px;
+        border-radius:10px;
+    }
    
 </style>
-<h2 class="text-center">@ViewBag.Title</h2><br/>
 <div class="container-fluid">
+    <div class="jumbo">
+        <h1 class="text-center">@ViewBag.Title</h1>
+    </div> <br/>
     <form action="Encryption" method="post">
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="plaintext">Plaintext</label>
                     <textarea class="form-control" id="plaintext" name="plaintext" rows="3" aria-describedby="plainError">
-</textarea>             
+</textarea>
                     <small id="plainError" style="color:darkred">
                         @if (Model != null)
                         {
@@ -41,7 +51,8 @@
             <div class="col-sm-4">
                 <div class="form-check">
                     <small id="keyHelp" class="form-text text-muted">
-                        Entering your own key is safer</small><br/>
+                        Entering your own key is safer
+                    </small><br />
                     <input class="form-check-input" type="checkbox" value="" id="checkKey" onclick="checkFunction('checkKey', 'keyChecked')">
                     <label class="form-check-label" for="checkKey">
                         Add key
@@ -51,14 +62,14 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4" >
+            <div class="col-sm-4">
                 <div class="form-group" id="keyChecked">
                     <label for="key">Key</label>
                     <input type="password" name="key" class="form-control" id="key" aria-describedby="ivHelp">
-      
+
                     <div class="form-check">
                         <br />
-                        <small id="ivHelp" class="form-text text-muted">Entering your own IV is safer</small><br/>
+                        <small id="ivHelp" class="form-text text-muted">Entering your own IV is safer</small><br />
                         <input class="form-check-input" type="checkbox" value="" id="checkIV" onclick="checkFunction('checkIV', 'ivChecked')">
                         <label class="form-check-label" for="checkIV">
                             Add IV
