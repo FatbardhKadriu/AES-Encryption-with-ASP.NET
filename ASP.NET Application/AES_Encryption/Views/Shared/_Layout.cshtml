@@ -14,11 +14,13 @@
         table td {
             padding: 0px 40px 0px 0px;
         }
+
         footer {
             position: absolute;
             bottom: 20px;
         }
     </style>
+    
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -35,7 +37,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Encryption", "Encryption", "Home")</li>
+                    <li style="margin-left:45px">@Html.ActionLink("Encryption", "Encryption", "Home")</li>
                     <li>@Html.ActionLink("Decryption", "Decryption", "Home")</li>
                 </ul>
             </div>
@@ -45,7 +47,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Grupi 1 - Siguria e informacionit</p>
+        <!--    <p>&copy; @DateTime.Now.Year - Grupi 1 - Siguria e informacionit</p> -->
         </footer>
     </div>
 
