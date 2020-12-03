@@ -16,7 +16,6 @@ namespace AES_Encryption.Controllers
             return View();
         }
 
- 
         public ActionResult Encryption()
         {
             return View();
@@ -38,10 +37,9 @@ namespace AES_Encryption.Controllers
                 encryptModel.plainError = "";
             }
             else
-            { 
-                encryptModel.plainError = "Plaintext field should not be empty!"; 
+            {
+                encryptModel.plainError = "Plaintext field should not be empty!";
             }
-
             return View(encryptModel);
         }
 
@@ -52,7 +50,7 @@ namespace AES_Encryption.Controllers
 
         [HttpPost]
         public ActionResult Decryption(String ciphertext, String key, String iv)
-        {            
+        {
             AESModel encryptModel = new AESModel();
             encryptModel.ciphertext = ciphertext;
             encryptModel.key = key;
@@ -66,9 +64,9 @@ namespace AES_Encryption.Controllers
             }
             else if (iv == "")
             {
-                encryptModel.ivError = "IV field should not be empty!";            
+                encryptModel.ivError = "IV field should not be empty!";
             }
-            else 
+            else
             {
                 try
                 {
@@ -86,7 +84,7 @@ namespace AES_Encryption.Controllers
                     encryptModel.error = "Invalid Key or IV!";
                     encryptModel.key = "";
                 }
-                
+
             }
             return View(encryptModel);
         }
@@ -98,48 +96,74 @@ namespace AES_Encryption.Controllers
             {
                 using (Aes myAes = Aes.Create())
                 {
-                    if (key != "")
-                    {
-                        if (iv == "") iv = Convert.ToBase64String(myAes.IV);
-                        key_iv.Add(key);
-                        key_iv.Add(iv);
+                    HashAlgorithm hashmd5 = MD5.Create();
+                    HashAlgorithm hashsha256 = SHA256.Create();
 
-                        if (key.Length != 44)
-                        {
-                            HashAlgorithm hash = MD5.Create();
-
-                            myAes.Key = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
-                            if (iv.Length != 24) myAes.IV = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
-                            else myAes.IV = Convert.FromBase64String(iv);
-                        }
-                        else
-                        {
-                            myAes.Key = Convert.FromBase64String(key);
-                            myAes.IV = Convert.FromBase64String(iv);
-                        }
-                    }
-                    else
-                    {
-                        key_iv.Add(Convert.ToBase64String(myAes.Key));
-                        key_iv.Add(Convert.ToBase64String(myAes.IV));
-                    }                 
-
+                    // encrypt
                     if (action == "e")
                     {
+                        // Only plaintext is given
+                        if (key == "" && iv == "")
+                        {
+                            key_iv.Add(Convert.ToBase64String(myAes.Key));
+                            key_iv.Add(Convert.ToBase64String(myAes.IV));
+                            myAes.Key = hashsha256.ComputeHash(myAes.Key);
+                            myAes.IV = hashmd5.ComputeHash(myAes.IV);
+                        }
+                        // Plaintext and encryption key are given
+                        else if (key != "" && iv == "")
+                        {
+                            key_iv.Add(key);
+                            key_iv.Add(Convert.ToBase64String(myAes.IV));
+                            myAes.Key = hashsha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+                            myAes.IV = hashmd5.ComputeHash(myAes.IV);
+                        }
+                        // Plaintext, key and initialization vector are given
+                        else
+                        {
+                            key_iv.Add(key);
+                            key_iv.Add(iv);
+                            myAes.Key = hashsha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+                            myAes.IV = hashmd5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
+                        }
+
                         byte[] encrypted = Encrypt(data, myAes.Key, myAes.IV);
                         key_iv.Add(Convert.ToBase64String(encrypted));
                     }
+                    // decrypt 
                     else
                     {
-                        string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
-                        key_iv.Add(decrypted);
+                        key_iv.Add(key);
+                        key_iv.Add(iv);
+
+                        try
+                        {
+                            myAes.Key = hashsha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+                            myAes.IV = hashmd5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
+                            string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
+                            key_iv.Add(decrypted);
+                        }
+                        catch
+                        {
+                            try
+                            {
+                                myAes.Key = hashsha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
+                                myAes.IV = hashmd5.ComputeHash(Convert.FromBase64String(iv));
+                                string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
+                                key_iv.Add(decrypted);
+                            }
+                            catch
+                            {
+                                myAes.Key = hashsha256.ComputeHash(Convert.FromBase64String(key));
+                                myAes.IV = hashmd5.ComputeHash(Convert.FromBase64String(iv));
+                                string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
+                                key_iv.Add(decrypted);
+                            }
+                        }
                     }
                 }
             }
-            catch (Exception exp)
-            {
-                Console.WriteLine(exp.Message);
-            }
+            catch (Exception exp) { }
             return key_iv;
         }
 
