@@ -1,4 +1,5 @@
 ﻿using AES_Encryption.Models;
+using AES_Encryption.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,9 @@ namespace AES_Encryption.Controllers
 {
     public class HomeController : Controller
     {
+        EncryptService encryptService = new EncryptService();
+        DecryptService decyptService = new DecryptService();
+
         public ActionResult Index()
         {
             return View();
@@ -127,7 +131,7 @@ namespace AES_Encryption.Controllers
                             myAes.IV = hashmd5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
                         }
 
-                        byte[] encrypted = Encrypt(data, myAes.Key, myAes.IV);
+                        byte[] encrypted = encryptService.Encrypt(data, myAes.Key, myAes.IV);
                         key_iv.Add(Convert.ToBase64String(encrypted));
                     }
                     // decrypt 
@@ -140,7 +144,7 @@ namespace AES_Encryption.Controllers
                         {
                             myAes.Key = hashsha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
                             myAes.IV = hashmd5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(iv));
-                            string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
+                            string decrypted = decyptService.Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
                             key_iv.Add(decrypted);
                         }
                         catch
@@ -149,14 +153,14 @@ namespace AES_Encryption.Controllers
                             {
                                 myAes.Key = hashsha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(key));
                                 myAes.IV = hashmd5.ComputeHash(Convert.FromBase64String(iv));
-                                string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
+                                string decrypted = decyptService.Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
                                 key_iv.Add(decrypted);
                             }
                             catch
                             {
                                 myAes.Key = hashsha256.ComputeHash(Convert.FromBase64String(key));
                                 myAes.IV = hashmd5.ComputeHash(Convert.FromBase64String(iv));
-                                string decrypted = Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
+                                string decrypted = decyptService.Decrypt(Convert.FromBase64String(data), myAes.Key, myAes.IV);
                                 key_iv.Add(decrypted);
                             }
                         }
@@ -167,55 +171,7 @@ namespace AES_Encryption.Controllers
             return key_iv;
         }
 
-        byte[] Encrypt(string plainText, byte[] Key, byte[] IV)
-        {
-            byte[] encrypted;
 
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = Key;
-                aesAlg.IV = IV;
-
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(plainText);
-                        }
-                        encrypted = msEncrypt.ToArray();
-                    }
-                }
-            }
-            return encrypted;
-        }
-
-        string Decrypt(byte[] cipherText, byte[] Key, byte[] IV)
-        {
-            string plaintext = null;
-
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = Key;
-                aesAlg.IV = IV;
-
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            plaintext = srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
-            }
-            return plaintext;
-        }
     }
+
 }
