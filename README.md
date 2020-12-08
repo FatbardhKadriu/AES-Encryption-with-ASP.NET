@@ -10,11 +10,11 @@ In this application is implemented AES (Advanced Encryption Standard) encryption
 
 Encryption has three possibilities:
 
-- Only plaintext is given to be encrypted - In this case an encryption key and an initialization vector are generated which are used in the encryption function. The used key and IV are shown to the user.
+- Only plaintext is given to be encrypted - In this case an encryption key and an initialization vector are generated  by default. Key which is used in encryption is generated as SHA-256 hash of given key and iv is generated as MD5 hash of given iv. The given key and IV are shown to the user.
 
-- Plaintext and encryption key are given - If the key has adequate length for the AES algorithm is used as such, otherwise its hash is generated so that for any type of input the key used in the algorithm has a fixed length acceptable for AES. An initialization vector is generated and attached to the encryption function. The IV used is shown to the user.
+- Plaintext and encryption key are given - Key SHA-256 hash is generated so that for any type of input the key used in the algorithm has a fixed length acceptable for AES. An initialization vector is generated and its MD5 hash is attached to the encryption function. The default IV is shown to the user.
 
-- Plaintext, key and initialization vector are given - If key and IV have adequate length for AES algorithm, they are used as provided by the user, otherwise key hash and IV hash are generated so that for any key and IV input are used their acceptable lengths for AES.
+- Plaintext, key and initialization vector are given - Key SHA-256 hash and IV MD5 hash are generated so that for any key and IV input are used their acceptable lengths for AES.
 
 It is also worth noting to mention that after successful encryption you can export used key and IV as text file.
 

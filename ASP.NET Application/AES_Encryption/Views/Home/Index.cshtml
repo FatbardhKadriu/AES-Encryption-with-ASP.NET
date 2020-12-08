@@ -320,8 +320,8 @@
                 algorithm is not a Feistel cipher. The major implication of this fact is that in
                 order to decrypt, the AES operations must be invertible. Also unlike DES, the
                 AES algorithm has a highly mathematical structure. We'll only give a quick
-                overview of the algorithm—large volumes of information on all aspects of
-                AES are readily available—and we'll largely ignore the elegant mathematical
+                overview of the algorithm large volumes of information on all aspects of
+                AES are readily available and we'll largely ignore the elegant mathematical
                 structure. In any case, it is a safe bet that no crypto algorithm in history
                 has received as much scrutiny in as short of a period of time as the AES.
                 Some of the pertinent facts of AES are as follows:
@@ -331,7 +331,7 @@
                 <li>Three key lengths are available: 128, 192, or 256 bits.</li>
                 <li>The number of rounds varies from 10 to 14, depending on the key length.</li>
                 <li>
-                    Each round consists of four functions, in three layers—the functions are
+                    Each round consists of four functions, in three layers the functions are
                     listed below, with the layer in parentheses.
                     <ol>
                         <li>ByteSub (nonlinear layer)</li>
@@ -345,15 +345,15 @@
                 For ease of description, the block and cipher key are often represented as an array of columns where each
                 array has 4 rows and each column represents a single byte (8 bits). The number of columns in an array representing
                 the state or cipher key, then, can be calculated as the block or key length divided by 32 (32 bits = 4 bytes).
-                An array representing a State will have Nb columns, where Nb values of 4, 6, and 8 correspond to a 128-, 192-,
+                An array representing a State will have Nb columns, where Nb values of 4, 6, and 8 correspond to a 128, 192,
                 and 256-bit block, respectively. Similarly, an array representing a Cipher Key will have Nk columns, where Nk values
-                of 4, 6, and 8 correspond to a 128-, 192-, and 256-bit key, respectively.
+                of 4, 6, and 8 correspond to a 128, 192, and 256 - bit key, respectively.
             </p>
             <p>The AES/Rijndael cipher itself has three operational stages:</p>
             <ul>
                 <li>AddRound Key transformation</li>
                 <li>
-                    Nr-1 Rounds comprising:
+                    Nr 1 Rounds comprising:
                     <ul>
                         <li>SubBytes transformation</li>
                         <li>ShiftRows transformation</li>
@@ -406,19 +406,18 @@
                 <p>Encryption has three possibilities:</p>
                 <ol>
                     <li>
-                        Only plaintext is given to be encrypted - In this case an encryption key and an initialization vector are
-                        generated which are used in the encryption function. The used key and IV are shown to the user.
+                        Only plaintext is given to be encrypted - In this case an encryption key and an initialization vector are generated  
+                        by default. Key which is used in encryption is generated as SHA-256 hash of given key and iv is generated as MD5 
+                        hash of given iv. The given key and IV are shown to the user.
                     </li>
                     <li>
-                        Plaintext and encryption key are given - If the key has adequate length for the AES algorithm is used as such,
-                        otherwise its hash is generated so that for any type of input the key used in the algorithm has a fixed length
-                        acceptable for AES. An initialization vector is generated and attached to the encryption function. The IV used
-                        is shown to the user.
+                        Plaintext and encryption key are given - Key SHA-256 hash is generated so that for any type of input the key 
+                        used in the algorithm has a fixed length acceptable for AES. An initialization vector is generated and its MD5 
+                        hash is attached to the encryption function. The default IV is shown to the user.
                     </li>
                     <li>
-                        Plaintext, key and initialization vector are given - If key and IV have adequate length for AES algorithm,
-                        they are used as provided by the user, otherwise key hash and IV hash are generated so that for any key and
-                        IV input are used their acceptable lengths for AES.
+                        Plaintext, key and initialization vector are given - Key SHA-256 hash and IV MD5 hash are generated so that 
+                        for any key and IV input are used their acceptable lengths for AES.
                     </li>
                 </ol>
                 <span>It is also worth noting to mention that after successful encryption you can export used key and IV as text file.</span>
